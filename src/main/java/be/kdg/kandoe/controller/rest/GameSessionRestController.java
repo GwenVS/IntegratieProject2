@@ -8,7 +8,7 @@ import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.dto.RequestUserDto;
-import be.kdg.kandoe.dto.gameSession.CreateGameSessionDto;
+import be.kdg.kandoe.dto.gameSession.GameSessionDto;
 import be.kdg.kandoe.dto.gameSession.NotificationDto;
 import be.kdg.kandoe.repository.jpa.SubThemeJpa;
 import be.kdg.kandoe.repository.jpa.ThemeJpa;
@@ -77,10 +77,10 @@ public class GameSessionRestController {
         }
 
         List<GameSession> gameSessions = gameSessionService.getUserGameSessions(username);
-        List<CreateGameSessionDto> returnGameSessionDtos = new ArrayList<>();
+        List<GameSessionDto> returnGameSessionDtos = new ArrayList<>();
 
         for(GameSession gameSession : gameSessions){
-            CreateGameSessionDto dto = new CreateGameSessionDto(gameSession.getTitle(), gameSession.getHighestAccesLevelModerator(), gameSession.isOrganisatorPlaying(), gameSession.isAllowUsersToAdd(), gameSession.getAddLimit(), gameSession.getSelectionLimit(), gameSession.getTimerLength(), gameSession.getAllSubOrganisators());
+            GameSessionDto dto = new GameSessionDto(gameSession.getTitle(), gameSession.getHighestAccesLevelModerator(), gameSession.isOrganisatorPlaying(), gameSession.isAllowUsersToAdd(), gameSession.getAddLimit(), gameSession.getSelectionLimit(), gameSession.getTimerLength(), gameSession.getAllSubOrganisators());
             dto.setGameSessionId(gameSession.getGameSessionId());
             returnGameSessionDtos.add(dto);
         }
@@ -101,10 +101,10 @@ public class GameSessionRestController {
 
     @PostMapping("/api/private/sessions")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public ResponseEntity createGameSessionTest(@RequestBody CreateGameSessionDto createGameSessionDto, HttpServletRequest request){
+    public ResponseEntity createGameSessionTest(@RequestBody GameSessionDto gameSessionDto, HttpServletRequest request){
 
-        Theme theme = new Theme(createGameSessionDto.getthemeForSession());
-        GameSession gameSession = new GameSession(createGameSessionDto, userService.findUserByUsername(createGameSessionDto.getOrganisator()));
+        Theme theme = new Theme(gameSessionDto.getthemeForSession());
+        GameSession gameSession = new GameSession(gameSessionDto, userService.findUserByUsername(gameSessionDto.getOrganisator()));
 
 
         theme.addGameSession(gameSession);
