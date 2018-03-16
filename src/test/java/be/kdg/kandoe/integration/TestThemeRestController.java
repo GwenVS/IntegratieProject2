@@ -1,11 +1,9 @@
 package be.kdg.kandoe.integration;
 
-import be.kdg.kandoe.KandoeApplication;
 import be.kdg.kandoe.controller.rest.ThemeRestController;
-import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
-import be.kdg.kandoe.dto.SubThemeDto;
-import be.kdg.kandoe.dto.ThemeDto;
+import be.kdg.kandoe.dto.theme.SubThemeDto;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 import be.kdg.kandoe.service.implementation.ThemeServiceImpl;
 import be.kdg.kandoe.unit.theme.ThemeRepoMock;
 import org.junit.Assert;
@@ -20,7 +18,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;

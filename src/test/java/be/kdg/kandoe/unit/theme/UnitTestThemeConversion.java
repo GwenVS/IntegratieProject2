@@ -2,8 +2,8 @@ package be.kdg.kandoe.unit.theme;
 
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
-import be.kdg.kandoe.dto.SubThemeDto;
-import be.kdg.kandoe.dto.ThemeDto;
+import be.kdg.kandoe.dto.theme.SubThemeDto;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 import be.kdg.kandoe.repository.jpa.SubThemeJpa;
 import be.kdg.kandoe.repository.jpa.ThemeJpa;
 import org.json.JSONArray;
@@ -11,10 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

@@ -1,7 +1,7 @@
 package be.kdg.kandoe.domain.theme;
 
 import be.kdg.kandoe.domain.GameSession;
-import be.kdg.kandoe.dto.ThemeDto;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 
 import java.util.ArrayList;
 import java.util.List;

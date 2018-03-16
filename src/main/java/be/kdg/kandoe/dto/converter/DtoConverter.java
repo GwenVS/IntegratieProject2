@@ -1,6 +1,7 @@
-package be.kdg.kandoe.dto;
+package be.kdg.kandoe.dto.converter;
 
 import be.kdg.kandoe.domain.theme.Theme;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 
 public abstract class DtoConverter {
 

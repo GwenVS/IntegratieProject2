@@ -2,8 +2,8 @@ package be.kdg.kandoe.integration;
 
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
-import be.kdg.kandoe.dto.SubThemeDto;
-import be.kdg.kandoe.dto.ThemeDto;
+import be.kdg.kandoe.dto.theme.SubThemeDto;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 import be.kdg.kandoe.service.declaration.ThemeService;
 import be.kdg.kandoe.service.exception.InputValidationException;
 import be.kdg.kandoe.service.exception.ThemeServiceException;
@@ -13,12 +13,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;

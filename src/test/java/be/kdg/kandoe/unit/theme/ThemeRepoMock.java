@@ -2,15 +2,8 @@ package be.kdg.kandoe.unit.theme;
 
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
-import be.kdg.kandoe.dto.ThemeDto;
 import be.kdg.kandoe.repository.declaration.ThemeRepository;
-import be.kdg.kandoe.service.declaration.ThemeService;
-import be.kdg.kandoe.service.exception.ThemeRepositoryException;
-import be.kdg.kandoe.service.exception.ThemeServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 

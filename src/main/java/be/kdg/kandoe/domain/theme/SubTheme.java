@@ -1,6 +1,6 @@
 package be.kdg.kandoe.domain.theme;
 
-import be.kdg.kandoe.dto.SubThemeDto;
+import be.kdg.kandoe.dto.theme.SubThemeDto;
 
 public class SubTheme {
 

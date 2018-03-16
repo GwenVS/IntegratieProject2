@@ -1,4 +1,4 @@
-package be.kdg.kandoe.dto;
+package be.kdg.kandoe.dto.theme;
 
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;

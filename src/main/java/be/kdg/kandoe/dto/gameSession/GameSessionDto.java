@@ -1,6 +1,6 @@
 package be.kdg.kandoe.dto.gameSession;
 
-import be.kdg.kandoe.dto.ThemeDto;
+import be.kdg.kandoe.dto.theme.ThemeDto;
 
 import java.util.List;
 
