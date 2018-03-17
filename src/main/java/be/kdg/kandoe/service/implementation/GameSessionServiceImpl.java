@@ -3,6 +3,7 @@ package be.kdg.kandoe.service.implementation;
 import be.kdg.kandoe.domain.GameSession;
 import be.kdg.kandoe.domain.GameSessionRole;
 import be.kdg.kandoe.domain.UserGameSessionInfo;
+import be.kdg.kandoe.domain.theme.Card;
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.repository.declaration.GameSessionRepository;
 import be.kdg.kandoe.service.declaration.GameSessionService;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -91,4 +93,22 @@ public class GameSessionServiceImpl implements GameSessionService{
         return false;
     }
 
+
+    @Override
+    public void start(long gameSessionId) {
+        GameSession gameSession = gameSessionRepository.findOne(gameSessionId);
+        List<User> playingUsers = gameSession.getUserGameSessionInfos().stream().map(ugsi -> ugsi.getUser()).collect(Collectors.toList());
+        List<Card> startCards = gameSession.getSubTheme().getCardSubThemes().stream().map(cst -> cst.getCard()).collect(Collectors.toList());
+        boolean playable = gameSession.isPlayable();
+        while (playable) {
+            for (User user : playingUsers) {
+                //todo
+            }
+        }
+    }
+
+    @Override
+    public void stop(long gameSessionId) {
+        //TODO
+    }
 }

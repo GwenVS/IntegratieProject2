@@ -1,5 +1,6 @@
 package be.kdg.kandoe.domain.theme;
 
+import be.kdg.kandoe.domain.GameSession;
 import be.kdg.kandoe.dto.theme.SubThemeDto;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public class SubTheme {
     private String subThemeName;
     private String subThemeDescription;
     private List<CardSubTheme> cardSubThemes;
+    private List<GameSession> gameSessions;
 
     public SubTheme() {
     }
@@ -62,6 +64,24 @@ public class SubTheme {
     public void removeCard(CardSubTheme cardSubTheme) {
         if (cardSubThemes.contains(cardSubTheme)) {
             cardSubThemes.remove(cardSubTheme);
+        }
+    }
+
+    public List<GameSession> getGameSessions() {
+        return gameSessions;
+    }
+
+    public void setGameSessions(List<GameSession> gameSessions) {
+        this.gameSessions = gameSessions;
+    }
+
+    public void addGameSession(GameSession gameSession) {
+        this.gameSessions.add(gameSession);
+    }
+
+    public void removeGameSession(GameSession gameSession) {
+        if(gameSessions.contains(gameSession)){
+            gameSessions.remove(gameSession);
         }
     }
 }

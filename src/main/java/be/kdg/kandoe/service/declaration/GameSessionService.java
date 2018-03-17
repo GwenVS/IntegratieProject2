@@ -13,6 +13,8 @@ public interface GameSessionService {
     GameSession getGameSessionWithId(Long id);
     GameSession updateGameSession(GameSession gameSession);
     GameSession addUserToGameSession(Long id, User user);
+    void start(long gameSessionId);
+    void stop(long gameSessionId);
 //    GameSessionRole getRoleOfUserInGameSession(long id, String username);
 //    GameSession upgradeAccessLevelOfUserInGameSession(long id, User user);
 }

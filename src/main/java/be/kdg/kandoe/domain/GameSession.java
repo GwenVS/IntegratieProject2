@@ -1,7 +1,9 @@
 package be.kdg.kandoe.domain;
 
+import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.dto.gameSession.CreateGameSessionDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -26,6 +28,10 @@ public class GameSession {
     private boolean allowUsersToAdd;
 
     @Column(nullable = false)
+    //todo: waar is algemene setupfile??? @Value("${gamesession.default.isPlayable}")
+    private boolean isPlayable;
+
+    @Column(nullable = false)
     @Value("${gamesession.default.addLimit}")
     private int addLimit;
 
@@ -48,6 +54,9 @@ public class GameSession {
     @Column
     private String image = "default-session.png";
 
+    @ManyToOne(targetEntity = GameSession.class,fetch = FetchType.EAGER)
+    @JsonIgnore
+    private SubTheme subTheme;
 
     public GameSession() {
     }
@@ -217,5 +226,21 @@ public class GameSession {
             }
         }
         return subOrganisators;
+    }
+
+    public boolean isPlayable() {
+        return isPlayable;
+    }
+
+    public void setPlayable(boolean playable) {
+        isPlayable = playable;
+    }
+
+    public SubTheme getSubTheme() {
+        return subTheme;
+    }
+
+    public void setSubTheme(SubTheme subTheme) {
+        this.subTheme = subTheme;
     }
 }
