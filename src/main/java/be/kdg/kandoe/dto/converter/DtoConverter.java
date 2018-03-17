@@ -1,9 +1,11 @@
 package be.kdg.kandoe.dto.converter;
 
+import be.kdg.kandoe.domain.Message;
 import be.kdg.kandoe.domain.theme.Card;
 import be.kdg.kandoe.domain.theme.CardSubTheme;
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
+import be.kdg.kandoe.dto.MessageDto;
 import be.kdg.kandoe.dto.theme.CardDto;
 import be.kdg.kandoe.dto.theme.CardSubThemeDto;
 import be.kdg.kandoe.dto.theme.SubThemeDto;
@@ -171,6 +173,24 @@ public abstract class DtoConverter {
         dto.setSubTheme(DtoConverter.toSubThemeDto(cardSubTheme.getSubTheme(), true));
         return dto;
     }
+    public static MessageDto toMessageDto(Message message) {
+        if (message == null) return null;
+        MessageDto dto = new MessageDto();
+        dto.setContent(message.getContent());
+        dto.setDateTime(message.getDateTime());
+        dto.setSender(message.getSender());
+        dto.setId(message.getId());
+        return dto;
+    }
 
+    public static Message toMessage(MessageDto dto){
+        if(dto == null) return null;
+        Message message = new Message();
+        message.setSender(dto.getSender());
+        message.setContent(dto.getContent());
+        message.setDateTime(dto.getDateTime());
+        message.setId(dto.getId());
+        return message;
+    }
 
 }

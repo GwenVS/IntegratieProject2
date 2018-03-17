@@ -4,6 +4,7 @@ import be.kdg.kandoe.domain.GameSession;
 import be.kdg.kandoe.domain.GameSessionRole;
 import be.kdg.kandoe.domain.Notification;
 import be.kdg.kandoe.domain.UserGameSessionInfo;
+import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.dto.RequestUserDto;
 import be.kdg.kandoe.dto.gameSession.CreateGameSessionDto;
@@ -215,7 +216,7 @@ public class GameSessionRestController {
         //Username (vd user om rechten te geven) bestaat die en is die nog geen Moderator, ModeratorParticipant of Submoderator
 
         if(gameSession == null ){
-            ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gamesession was not found!");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gamesession was not found!");
         }
 
         String tokenUsername = (String) request.getAttribute("username");
@@ -249,4 +250,65 @@ public class GameSessionRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("api/private/session/{sessionId}/start")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity startSession(@PathVariable long sessionId, HttpServletRequest request){
+        GameSession gameSession = gameSessionService.getGameSessionWithId(sessionId);
+
+
+        //GameSessionId bestaat die?
+        //Username in de token --> Is deze user een Moderator, ModeratorParticipant of Submoderator anders unauthorized
+        //Username (vd user om rechten te geven) bestaat die en is die nog geen Moderator, ModeratorParticipant of Submoderator
+
+        if(gameSession == null ){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gamesession was not found!");
+        }
+
+        String tokenUsername = (String) request.getAttribute("username");
+
+        //Role of the user from the token
+        GameSessionRole role = gameSession.getRoleOfUser(tokenUsername);
+
+        if(role == null){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User that made the request is not part of this game session!");
+        }
+
+        if(role == GameSessionRole.Participant){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User doesn't have the right to start this session");
+        }
+
+        gameSessionService.start(gameSession.getGameSessionId());
+ // TODO: redirect?
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("api/private/session/{sessionId}/game")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity loadGame(@PathVariable long sessionId, HttpServletRequest request){
+        GameSession gameSession = gameSessionService.getGameSessionWithId(sessionId);
+
+        //GameSessionId bestaat die?
+        //Username in de token --> Is deze user een Moderator, ModeratorParticipant of Submoderator anders unauthorized
+        //Username (vd user om rechten te geven) bestaat die en is die nog geen Moderator, ModeratorParticipant of Submoderator
+
+        if(!gameSession.isPlayable()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Gamesession was not started!");
+        }
+
+        if(gameSession == null ){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gamesession was not found!");
+        }
+
+        String tokenUsername = (String) request.getAttribute("username");
+
+        //Role of the user from the token
+        GameSessionRole role = gameSession.getRoleOfUser(tokenUsername);
+
+        if(role == null){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User that made the request is not part of this game session!");
+        }
+
+        SubTheme subTheme = gameSessionService.getGameSessionSubTheme(sessionId);
+        return ResponseEntity.ok(subTheme);
+    }
 }
