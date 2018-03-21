@@ -2,6 +2,7 @@ package be.kdg.kandoe.domain.theme;
 
 import be.kdg.kandoe.dto.theme.SubThemeDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubTheme {
@@ -13,6 +14,7 @@ public class SubTheme {
     private List<CardSubTheme> cardSubThemes;
 
     public SubTheme() {
+         cardSubThemes = new ArrayList<>();
     }
 
     public long getSubThemeId() {

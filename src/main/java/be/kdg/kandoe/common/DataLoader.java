@@ -55,36 +55,45 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         subThemeList.add(subTheme3);
 
         theme.setSubThemes(subThemeList);
-        this.themeService.addTheme(theme);
-
 
         Card card1 = new Card();
         card1.setName("Duvel");
         card1.setDefaultCard(true);
         card1.setDescription("bierke uit Breendonk");
         CardSubTheme cardSubTheme1 = new CardSubTheme(card1,subTheme1);
-        List<CardSubTheme> card1Subthemes = new ArrayList<>();
-        card1Subthemes.add(cardSubTheme1);
-        card1.setCardSubThemes(card1Subthemes);
+        card1.addCardSubTheme(cardSubTheme1);
+        subTheme1.addCard(cardSubTheme1);
+
+
 
         Card card2 = new Card();
         card2.setName("Triple Karmeliet");
         card2.setDefaultCard(true);
         card2.setDescription("bierke uit Dendermonde");
+
         CardSubTheme cardSubTheme2 = new CardSubTheme(card2,subTheme1);
         CardSubTheme cardSubTheme2bis = new CardSubTheme(card2,subTheme3);
-        List<CardSubTheme> card2Subthemes = new ArrayList<>();
-        card2Subthemes.add(cardSubTheme2);
-        card2Subthemes.add(cardSubTheme2bis);
-        card2.setCardSubThemes(card2Subthemes);
+        card2.addCardSubTheme(cardSubTheme2);
+        card2.addCardSubTheme(cardSubTheme2bis);
+        subTheme1.addCard(cardSubTheme2);
+        subTheme3.addCard(cardSubTheme2bis);
+
+
 
         Card card3 = new Card();
         card3.setName("Duits bierke");
         card3.setDefaultCard(true);
         card3.setDescription("bierke uit een onbekend duits dorpke");
         CardSubTheme cardSubTheme3 = new CardSubTheme(card3,subTheme2);
-        List<CardSubTheme> card3Subthemes = new ArrayList<>();
-        card3Subthemes.add(cardSubTheme3);
-        card3.setCardSubThemes(card3Subthemes);
+        card3.addCardSubTheme(cardSubTheme3);
+        subTheme2.addCard(cardSubTheme3);
+
+        this.themeService.addTheme(theme);
+        //this.themeService.addSubThemeByThemeId(subTheme1, 1);
+        //this.themeService.addSubThemeByThemeId(subTheme2, 1);
+        //this.themeService.addSubThemeByThemeId(subTheme3, 1);
+        //this.themeService.addCard(card1);
+        //this.themeService.addCard(card2);
+        //this.themeService.addCard(card3);
     }
 }

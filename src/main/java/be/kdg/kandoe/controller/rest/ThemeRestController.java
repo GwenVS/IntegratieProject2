@@ -139,6 +139,7 @@ public class ThemeRestController {
         SubTheme subTheme = DtoConverter.toSubTheme(subThemeDto, false);
         SubTheme createdSubTheme = themeService.addSubThemeByThemeId(DtoConverter.toSubTheme(subThemeDto, false), themeId);
         if (createdSubTheme != null) {
+            logger.log(Priority.INFO, "Successfully created new SubTheme");
             return ResponseEntity.ok().body(DtoConverter.toSubThemeDto(createdSubTheme, false));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
