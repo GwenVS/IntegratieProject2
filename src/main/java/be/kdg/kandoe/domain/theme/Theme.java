@@ -1,6 +1,7 @@
 package be.kdg.kandoe.domain.theme;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Theme {
@@ -11,7 +12,7 @@ public class Theme {
 
 
     public Theme() {
-
+        subThemes = new ArrayList<>();
     }
 
     public String getName() {
