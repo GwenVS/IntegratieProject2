@@ -82,4 +82,11 @@ public class ThemeJpa {
         this.subThemes = subThemes;
     }
 
+    public List<GameSession> getGameSessions() {
+        return gameSessions;
+    }
+
+    public void setGameSessions(List<GameSession> gameSessions) {
+        this.gameSessions = gameSessions;
+    }
 }
