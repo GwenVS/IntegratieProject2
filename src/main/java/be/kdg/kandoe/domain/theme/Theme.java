@@ -3,6 +3,7 @@ package be.kdg.kandoe.domain.theme;
 
 import be.kdg.kandoe.dto.theme.ThemeDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public class Theme {
     private long themeId;
     private String name;
     private String description;
-    private List<SubTheme> subThemes;
+    private List<SubTheme> subThemes = new ArrayList<>();
 
 
     public Theme() {

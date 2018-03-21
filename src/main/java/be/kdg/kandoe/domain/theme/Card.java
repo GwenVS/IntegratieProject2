@@ -10,7 +10,7 @@ public class Card {
     //private MultipartFile image;
     //private String imagePath;
     private boolean isDefaultCard;
-    private List<CardSubTheme> cardSubThemes;
+    private List<CardSubTheme> cardSubThemes = new ArrayList<>();
 
     public Card() {
         cardSubThemes = new ArrayList<>();

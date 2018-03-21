@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,7 +31,7 @@ public class SubThemeJpa {
     private List<CardSubThemeJpa> cardSubThemes;
 
     public SubThemeJpa() {
-
+        cardSubThemes = new ArrayList<>();
     }
 
     public Long getSubThemeId() {
