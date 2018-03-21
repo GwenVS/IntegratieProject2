@@ -32,7 +32,7 @@ public class ThemeJpa {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
-    private List<SubThemeJpa> subThemes;
+    private List<SubThemeJpa> subThemes = new ArrayList<>();
 
     @OneToMany(targetEntity = GameSession.class,mappedBy = "themeForSession")
     @Column
