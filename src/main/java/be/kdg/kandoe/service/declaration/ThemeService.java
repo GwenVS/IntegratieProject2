@@ -29,7 +29,6 @@ public interface ThemeService {
     List<Theme> getAllThemes();
     List<SubTheme> getAllSubThemes();
     List<SubTheme> getSubThemesByThemeId(long id);
-    SubTheme getSingleSubThemeByThemeId(long themeId, long subThemeId);
 
     List<Card> getCardsBySubthemeId(long subthemeId);
     Card getCardById(long cardId);

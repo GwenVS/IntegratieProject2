@@ -28,8 +28,8 @@ public class ThemeRestController {
 
     private ThemeService themeService;
 
-    public ThemeRestController(ThemeRepository repository) {
-        this.themeService = new ThemeServiceImpl(repository);
+    public ThemeRestController(ThemeService themeService) {
+        this.themeService = themeService;
     }
 
     @RequestMapping(value = "api/public/themes", method = RequestMethod.GET)
@@ -109,7 +109,7 @@ public class ThemeRestController {
     @RequestMapping(value = "api/public/theme/{themeId}/subtheme/{subThemeId}", method= RequestMethod.GET)
     public ResponseEntity<SubThemeDto> getSingleSubThemeByThemeId(@PathVariable(name="themeId")long themeId, @PathVariable(name = "subThemeId")long subThemeId){
         System.out.println("CALL RECEIVED: getSingleSubThemeByThemeId: THEME "+themeId+" SUBTHEME: "+subThemeId);
-        SubTheme subTheme = themeService.getSingleSubThemeByThemeId(themeId, subThemeId);
+        SubTheme subTheme = themeService.getSubThemeById(subThemeId);
         if(subTheme==null){
             return ResponseEntity.notFound().build();
         }
@@ -188,30 +188,8 @@ public class ThemeRestController {
     }
 
     //PUT-METHODS
-    //DELET-METHODS
-    @RequestMapping(value = "api/public/theme/{themeId}", method = RequestMethod.DELETE)
-    public ResponseEntity<ThemeDto> deleteThemeByThemeId(@PathVariable Long themeId) {
-        System.out.println("CALLED deleteThemeByThemeId: " + themeId);
-        Theme deletedTheme = null;
-        try {
-            deletedTheme = themeService.removeThemeById(themeId);
-            return ResponseEntity.ok().body(DtoConverter.toThemeDto(deletedTheme, false));
-        } catch (ThemeRepositoryException e) {
-            return ResponseEntity.notFound().build();
-        }
+    //DELETE-METHODS
 
-
-    }
-
-    @RequestMapping(value = "api/public/theme", method = RequestMethod.DELETE)
-    public ResponseEntity<ThemeDto> deleteThemeByName(@RequestParam(value = "name") String name) {
-        Theme foundTheme = themeService.getThemeByName(name);
-        if (foundTheme == null) {
-            return ResponseEntity.notFound().build();
-        }
-        themeService.removeThemeById(foundTheme.getThemeId());
-        return ResponseEntity.ok().body(DtoConverter.toThemeDto(foundTheme, false));
-    }
 
     @RequestMapping(value = "api/public/themes", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteThemes() {
@@ -221,13 +199,12 @@ public class ThemeRestController {
 
     @RequestMapping(value = "api/public/subthemes/{themeId}", method = RequestMethod.DELETE)
     public ResponseEntity<List<SubThemeDto>> deleteSubThemesByThemeId(@PathVariable(name = "themeId") long themeId) {
-        List<SubTheme> deletedSubThemes = null;
         try {
-            deletedSubThemes = themeService.removeSubThemesByThemeId(themeId);
+            themeService.removeSubThemesByThemeId(themeId);
         } catch (ThemeRepositoryException tse) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(deletedSubThemes.stream().map(st -> DtoConverter.toSubThemeDto(st, false)).collect(Collectors.toList()));
+        return ResponseEntity.ok().build();
     }
     //DELETE-METHODS
 
@@ -300,8 +277,8 @@ public class ThemeRestController {
     @RequestMapping(value = "/api/public/card/{cardId}", method = RequestMethod.DELETE)
     public ResponseEntity<Card> deleteCardById(@PathVariable long cardId) {
         try {
-            Card card = themeService.removeCardById(cardId);
-            return ResponseEntity.ok(card);
+            themeService.removeCardById(cardId);
+            return ResponseEntity.ok().build();
         } catch (ThemeRepositoryException e) {
             e.printStackTrace();
             return ResponseEntity.notFound().build();

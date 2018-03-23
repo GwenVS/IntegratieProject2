@@ -4,6 +4,9 @@ import be.kdg.kandoe.domain.theme.Card;
 import be.kdg.kandoe.domain.theme.CardSubTheme;
 import be.kdg.kandoe.domain.theme.SubTheme;
 import be.kdg.kandoe.domain.theme.Theme;
+import be.kdg.kandoe.repository.declaration.CardRepository;
+import be.kdg.kandoe.repository.declaration.CardSubThemeRepository;
+import be.kdg.kandoe.repository.declaration.SubThemeRepository;
 import be.kdg.kandoe.repository.declaration.ThemeRepository;
 import be.kdg.kandoe.service.declaration.ThemeService;
 import be.kdg.kandoe.service.exception.InputValidationException;
@@ -23,10 +26,16 @@ import java.util.List;
 public class ThemeServiceImpl implements ThemeService {
 
     private ThemeRepository themeRepo;
+    private SubThemeRepository subThemeRepo;
+    private CardRepository cardRepo;
+    private CardSubThemeRepository cardSubThemeRepo;
 
     @Autowired
-    public ThemeServiceImpl(ThemeRepository repository) {
+    public ThemeServiceImpl(ThemeRepository repository, SubThemeRepository subThemeRepo, CardRepository cardRepo, CardSubThemeRepository cardSubThemeRepo) {
         this.themeRepo = repository;
+        this.subThemeRepo = subThemeRepo;
+        this.cardRepo = cardRepo;
+        this.cardSubThemeRepo = cardSubThemeRepo;
     }
 
     //ADD-METHODS
@@ -41,21 +50,21 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public SubTheme addSubThemeByThemeId(SubTheme subTheme, long themeId) throws ThemeRepositoryException {
-        Theme themeToAdd = themeRepo.findThemeByThemeId(themeId);
+        Theme themeToAdd = themeRepo.findOne(themeId);
         subTheme.setTheme(themeToAdd);
-        SubTheme result = themeRepo.createSubTheme(subTheme);
+        SubTheme result = subThemeRepo.save(subTheme);
         return result;
     }
 
     @Override
     public Card addCard(Card card) throws ThemeRepositoryException {
-        return themeRepo.createCard(card);
+        return cardRepo.save(card);
     }
 
     @Override
     public SubTheme addCardToSubTheme(long cardId, long subThemeId) {
-        SubTheme subThemeForCard = themeRepo.findSubThemeById(subThemeId);
-        Card cardToAdd = themeRepo.findCardById(cardId);
+        SubTheme subThemeForCard = subThemeRepo.findOne(subThemeId);
+        Card cardToAdd = cardRepo.findOne(cardId);
         for (CardSubTheme card : subThemeForCard.getCardSubThemes()) {
             if (card.getCard().getCardId() == cardId && card.getSubTheme().getSubThemeId() == subThemeId) {
                 throw new ThemeServiceException("Card Already exists in SubTheme");
@@ -63,12 +72,12 @@ public class ThemeServiceImpl implements ThemeService {
         }
         CardSubTheme cst = new CardSubTheme(cardToAdd, subThemeForCard);
 
-        CardSubTheme addedCST = themeRepo.createCardSubTheme(cst);
+        CardSubTheme addedCST = cardSubThemeRepo.save(cst);
         subThemeForCard.addCard(addedCST);
         cardToAdd.addCardSubTheme(addedCST);
-        SubTheme result1 = themeRepo.editSubTheme(subThemeForCard);
-        Card card1 = themeRepo.editCard(cardToAdd);
-        return themeRepo.findSubThemeById(subThemeId);
+        SubTheme result1 = subThemeRepo.save(subThemeForCard);
+        Card card1 = cardRepo.save(cardToAdd);
+        return subThemeRepo.findOne(subThemeId);
     }
 
     //ADD-METHODS
@@ -81,74 +90,76 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public Theme getThemeById(long id) throws ThemeRepositoryException {
-        Theme foundTheme = themeRepo.findThemeById(id);
-        return themeRepo.findThemeById(id);
+        Theme foundTheme = themeRepo.findOne(id);
+        return themeRepo.findOne(id);
     }
 
     @Override
     public SubTheme getSubThemeById(long subThemeId) throws ThemeRepositoryException {
-        SubTheme foundSubTheme = themeRepo.findSubThemeById(subThemeId);
+        SubTheme foundSubTheme = subThemeRepo.findOne(subThemeId);
         return foundSubTheme;
     }
 
     @Override
     public List<Theme> getAllThemes() throws ThemeRepositoryException {
-        return themeRepo.findAllThemes();
+        return themeRepo.findAll();
     }
 
     @Override
     public List<SubTheme> getAllSubThemes() throws ThemeRepositoryException {
-        return themeRepo.findAllSubThemes();
+        return subThemeRepo.findAll();
     }
 
     @Override
     public List<SubTheme> getSubThemesByThemeId(long id) throws ThemeRepositoryException {
-        return themeRepo.findSubThemesByThemeId(id);
-    }
-
-    @Override
-    public SubTheme getSingleSubThemeByThemeId(long themeId, long subThemeId) {
-        return themeRepo.findSingleSubThemeByThemeId(themeId, subThemeId);
+        Theme theme = themeRepo.findOne(id);
+        return subThemeRepo.findSubThemesByTheme(theme);
     }
 
     @Override
     public List<Card> getAllCards() {
-        return themeRepo.findAllCards();
+        return cardRepo.findAll();
     }
 
     @Override
     public List<Card> getCardsBySubthemeId(long subthemeId) throws ThemeRepositoryException {
-        return themeRepo.findCardsBySubthemeId(subthemeId);
+        SubTheme subTheme = subThemeRepo.findOne(subthemeId);
+        List<CardSubTheme> cardSubThemelist = subTheme.getCardSubThemes();
+        List<Card> cards = new ArrayList<>();
+        for (CardSubTheme cardSubTheme : cardSubThemelist) {
+            Card card = cardSubTheme.getCard();
+            cards.add(card);
+        }
+        return cards;
     }
 
     @Override
     public Card getCardById(long cardId) throws ThemeRepositoryException {
-        Card card = themeRepo.findCardById(cardId);
+        Card card = cardRepo.findOne(cardId);
         return card;
     }
 
     @Override
     public Card editCard(Card card) throws ThemeRepositoryException {
-        return themeRepo.editCard(card);
+        return cardRepo.save(card);
     }
 
     @Override
-    public Card removeCardById(long cardId) throws ThemeRepositoryException {
-        Card card = this.getCardById(cardId);
-        return themeRepo.delete(card);
+    public void removeCardById(long cardId) throws ThemeRepositoryException {
+        cardRepo.delete(cardId);
     }
 
     //GET-METHODS
     //EDIT-METHODS
     @Override
     public Theme editTheme(Theme theme) throws ThemeRepositoryException {
-        if (checkNameLength(theme)) return themeRepo.editTheme(theme);
+        if (checkNameLength(theme)) return themeRepo.save(theme);
         throw new InputValidationException("Themename too long");
     }
 
     @Override
     public SubTheme editSubtheme(SubTheme subTheme) {
-        return themeRepo.editSubTheme(subTheme);
+        return subThemeRepo.save(subTheme);
     }
 
     //EDIT-METHODS
@@ -169,29 +180,23 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public void removeSubThemeById(long subThemeId) throws ThemeRepositoryException {
-        SubTheme subThemeToDelete = themeRepo.findSubThemeById(subThemeId);
-        themeRepo.deleteSubTheme(subThemeToDelete);
+        subThemeRepo.delete(subThemeId);
     }
 
     @Override
     public void removeSubThemesByThemeId(long themeId) throws ThemeRepositoryException {
-        Theme theme = themeRepo.findThemeById(themeId);
-        List<SubTheme> subThemes = themeRepo.findAllSubThemes();
-        List<SubTheme> deletedSubThemes = new ArrayList<>();
-        for (SubTheme st : subThemes
-                ) {
-            if (st.getTheme().getThemeId() == themeId) {
-                deletedSubThemes.add(st);
-                themeRepo.deleteSubTheme(st);
-            }
+        Theme theme = themeRepo.findOne(themeId);
+        List<SubTheme> subThemes = subThemeRepo.findSubThemesByTheme(theme);
+        for (SubTheme st : subThemes) {
+            subThemeRepo.delete(subThemes);
         }
     }
 
     @Override
-    public SubTheme removeCardsFromSubTheme(long subThemeId) {
-        SubTheme subThemeToEdit = themeRepo.findSubThemeById(subThemeId);
+    public void removeCardsFromSubTheme(long subThemeId) {
+        SubTheme subThemeToEdit = subThemeRepo.findOne(subThemeId);
         subThemeToEdit.setCardSubThemes(new ArrayList<>());
-        return themeRepo.editSubTheme(subThemeToEdit);
+        subThemeRepo.save(subThemeToEdit);
     }
     //REMOVE-METHODS
 
