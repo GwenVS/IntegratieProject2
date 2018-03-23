@@ -33,40 +33,60 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         SubTheme subTheme1 = new SubTheme();
         subTheme1.setSubThemeName("Belgische Bieren");
         subTheme1.setSubThemeDescription("enkel Belgische bieren zijn welkom hier!");
+        subTheme1.setSubThemeId((long)1);
 
         SubTheme subTheme2 = new SubTheme();
         subTheme2.setSubThemeName("Duitse bieren");
         subTheme2.setSubThemeDescription("enkel Duitse bieren zijn welkom hier!");
+        subTheme2.setSubThemeId((long)2);
 
         SubTheme subTheme3 = new SubTheme();
-        subTheme2.setSubThemeName("Favoriete bieren");
-        subTheme2.setSubThemeDescription("enkel jouw favoriete bieren zijn welkom hier!");
+        subTheme3.setSubThemeName("Favoriete bieren");
+        subTheme3.setSubThemeDescription("enkel jouw favoriete bieren zijn welkom hier!");
+        subTheme3.setSubThemeId((long)3);
 
         Theme theme = new Theme();
         theme.setName("TestTheme : Bier");
         theme.setDescription("Bieren over de hele wereld vergelijken");
+        theme.setThemeId((long)1);
+        this.themeService.addTheme(theme);
+        System.out.println(theme);
 
-        subTheme1.setTheme(theme);
-        subTheme2.setTheme(theme);
-        subTheme3.setTheme(theme);
-        List<SubTheme> subThemeList = new ArrayList<SubTheme>();
-        subThemeList.add(subTheme1);
-        subThemeList.add(subTheme2);
-        subThemeList.add(subTheme3);
+        Theme theme2 = new Theme();
+        theme2.setName("TestTheme : Nog meer Bier");
+        theme2.setDescription("Bieren over de hele wereld vergelijken");
+        theme2.setThemeId((long)2);
+        this.themeService.addTheme(theme2);
+        System.out.println(theme2);
 
-        theme.setSubThemes(subThemeList);
+        this.themeService.addSubThemeByThemeId(subTheme1, theme.getThemeId());
+        this.themeService.addSubThemeByThemeId(subTheme2, theme.getThemeId());
+        this.themeService.addSubThemeByThemeId(subTheme3, theme.getThemeId());
 
-        Card card1 = new Card();
+//        subTheme1.setTheme(theme);
+//        subTheme2.setTheme(theme);
+//        subTheme3.setTheme(theme);
+//        List<SubTheme> subThemeList = new ArrayList<SubTheme>();
+//        subThemeList.add(subTheme1);
+//        subThemeList.add(subTheme2);
+//        subThemeList.add(subTheme3);
+//
+//        theme.setSubThemes(subThemeList);
+
+/*        Card card1 = new Card();
         card1.setName("Duvel");
         card1.setDefaultCard(true);
         card1.setDescription("bierke uit Breendonk");
+        card1.setCardId((long)1);
+
         CardSubTheme cardSubTheme1 = new CardSubTheme(card1,subTheme1);
         card1.addCardSubTheme(cardSubTheme1);
         subTheme1.addCard(cardSubTheme1);
+        this.themeService.addCardToSubTheme(this.themeService.addCard(card1).getCardId(), subTheme1.getSubThemeId() );*/
 
 
 
-        Card card2 = new Card();
+/*        Card card2 = new Card();
         card2.setName("Triple Karmeliet");
         card2.setDefaultCard(true);
         card2.setDescription("bierke uit Dendermonde");
@@ -86,13 +106,9 @@ public class DataLoader implements ApplicationListener<ApplicationReadyEvent> {
         card3.setDescription("bierke uit een onbekend duits dorpke");
         CardSubTheme cardSubTheme3 = new CardSubTheme(card3,subTheme2);
         card3.addCardSubTheme(cardSubTheme3);
-        subTheme2.addCard(cardSubTheme3);
+        subTheme2.addCard(cardSubTheme3);*/
 
-        this.themeService.addTheme(theme);
-        //this.themeService.addSubThemeByThemeId(subTheme1, 1);
-        //this.themeService.addSubThemeByThemeId(subTheme2, 1);
-        //this.themeService.addSubThemeByThemeId(subTheme3, 1);
-        //this.themeService.addCard(card1);
+
         //this.themeService.addCard(card2);
         //this.themeService.addCard(card3);
     }

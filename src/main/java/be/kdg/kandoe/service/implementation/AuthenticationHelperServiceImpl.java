@@ -3,7 +3,7 @@ package be.kdg.kandoe.service.implementation;
 import be.kdg.kandoe.common.DeviceProvider;
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.domain.user.UserTokenState;
-import be.kdg.kandoe.dto.UserDto;
+import be.kdg.kandoe.dto.User.UserDto;
 import be.kdg.kandoe.security.TokenHelper;
 import be.kdg.kandoe.security.auth.JwtAuthenticationRequest;
 import be.kdg.kandoe.service.declaration.AuthenticationHelperService;

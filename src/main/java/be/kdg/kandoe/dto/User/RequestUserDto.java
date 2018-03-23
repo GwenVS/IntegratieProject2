@@ -1,4 +1,4 @@
-package be.kdg.kandoe.dto;
+package be.kdg.kandoe.dto.User;
 
 import be.kdg.kandoe.domain.user.Gender;
 

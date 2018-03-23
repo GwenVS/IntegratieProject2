@@ -1,8 +1,8 @@
 package be.kdg.kandoe.controller.rest;
 
 import be.kdg.kandoe.domain.user.User;
-import be.kdg.kandoe.dto.RequestUserDto;
-import be.kdg.kandoe.dto.UserDto;
+import be.kdg.kandoe.dto.User.RequestUserDto;
+import be.kdg.kandoe.dto.User.UserDto;
 import be.kdg.kandoe.service.declaration.AuthenticationHelperService;
 import be.kdg.kandoe.service.declaration.StorageService;
 import be.kdg.kandoe.service.declaration.UserService;

@@ -1,8 +1,8 @@
 package be.kdg.kandoe.domain.user;
 
 import be.kdg.kandoe.domain.UserGameSessionInfo;
-import be.kdg.kandoe.dto.UpdateuserDto;
-import be.kdg.kandoe.dto.UserDto;
+import be.kdg.kandoe.dto.User.UpdateuserDto;
+import be.kdg.kandoe.dto.User.UserDto;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

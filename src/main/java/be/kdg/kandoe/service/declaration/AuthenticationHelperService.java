@@ -2,7 +2,7 @@ package be.kdg.kandoe.service.declaration;
 
 import be.kdg.kandoe.domain.user.User;
 import be.kdg.kandoe.domain.user.UserTokenState;
-import be.kdg.kandoe.dto.UserDto;
+import be.kdg.kandoe.dto.User.UserDto;
 import be.kdg.kandoe.security.auth.JwtAuthenticationRequest;
 import be.kdg.kandoe.service.exception.CustomAuthenticationException;
 import org.springframework.mobile.device.Device;

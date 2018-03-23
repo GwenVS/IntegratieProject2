@@ -7,7 +7,5 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     User findUserByUsername(String username);
 
     User findUserByEmail(String email);
-//    @Query(value = "SELECT u.username FROM USERS u WHERE UPPER(u.USERNAME) = UPPER(:username)", nativeQuery = true)
-//    User findUserByUsername(@Param("username") String username);
-//    User findUserByEmail(String email);
+
 }

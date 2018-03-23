@@ -5,7 +5,7 @@ import be.kdg.kandoe.domain.GameSessionRole;
 import be.kdg.kandoe.domain.Notification;
 import be.kdg.kandoe.domain.UserGameSessionInfo;
 import be.kdg.kandoe.domain.user.User;
-import be.kdg.kandoe.dto.RequestUserDto;
+import be.kdg.kandoe.dto.User.RequestUserDto;
 import be.kdg.kandoe.dto.gameSession.CreateGameSessionDto;
 import be.kdg.kandoe.dto.gameSession.NotificationDto;
 import be.kdg.kandoe.service.declaration.AuthenticationHelperService;

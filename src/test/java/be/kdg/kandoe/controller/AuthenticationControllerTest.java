@@ -1,17 +1,9 @@
 package be.kdg.kandoe.controller;
 
-import be.kdg.kandoe.common.DeviceProvider;
-import be.kdg.kandoe.common.TimeProvider;
-import be.kdg.kandoe.domain.user.Authority;
-import be.kdg.kandoe.domain.user.Gender;
-import be.kdg.kandoe.domain.user.User;
-import be.kdg.kandoe.dto.UserDto;
-import be.kdg.kandoe.security.TokenHelper;
+import be.kdg.kandoe.dto.User.UserDto;
 import be.kdg.kandoe.service.declaration.AuthenticationHelperService;
 import be.kdg.kandoe.service.declaration.UserService;
 import be.kdg.kandoe.service.exception.CustomAuthenticationException;
-import be.kdg.kandoe.service.exception.UserServiceException;
-import be.kdg.kandoe.service.implementation.CustomUserDetailsService;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,27 +13,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
