@@ -33,7 +33,7 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public Theme addTheme(Theme theme) throws ThemeRepositoryException {
         if (checkNameLength(theme)) {
-            return themeRepo.createTheme(theme);
+            return themeRepo.save(theme);
         } else {
             throw new InputValidationException("Theme name too long");
         }
@@ -41,7 +41,7 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public SubTheme addSubThemeByThemeId(SubTheme subTheme, long themeId) throws ThemeRepositoryException {
-        Theme themeToAdd = themeRepo.findThemeById(themeId);
+        Theme themeToAdd = themeRepo.findThemeByThemeId(themeId);
         subTheme.setTheme(themeToAdd);
         SubTheme result = themeRepo.createSubTheme(subTheme);
         return result;
@@ -159,25 +159,22 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Theme removeThemeById(long themeId) throws ThemeRepositoryException {
+    public void removeThemeByThemeId(long themeId) throws ThemeRepositoryException {
         try {
-            Theme themeToDelete = themeRepo.findThemeById(themeId);
-            return themeRepo.deleteTheme(themeToDelete);
+            themeRepo.delete(themeId);
         } catch (ThemeRepositoryException e) {
             throw e;
         }
-
-
     }
 
     @Override
-    public SubTheme removeSubThemeById(long subThemeId) throws ThemeRepositoryException {
+    public void removeSubThemeById(long subThemeId) throws ThemeRepositoryException {
         SubTheme subThemeToDelete = themeRepo.findSubThemeById(subThemeId);
-        return themeRepo.deleteSubTheme(subThemeToDelete);
+        themeRepo.deleteSubTheme(subThemeToDelete);
     }
 
     @Override
-    public List<SubTheme> removeSubThemesByThemeId(long themeId) throws ThemeRepositoryException {
+    public void removeSubThemesByThemeId(long themeId) throws ThemeRepositoryException {
         Theme theme = themeRepo.findThemeById(themeId);
         List<SubTheme> subThemes = themeRepo.findAllSubThemes();
         List<SubTheme> deletedSubThemes = new ArrayList<>();
@@ -188,7 +185,6 @@ public class ThemeServiceImpl implements ThemeService {
                 themeRepo.deleteSubTheme(st);
             }
         }
-        return deletedSubThemes;
     }
 
     @Override

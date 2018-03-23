@@ -21,9 +21,9 @@ public interface ThemeService {
     Theme editTheme(Theme theme);
     SubTheme editSubtheme(SubTheme subTheme);
 
-    Theme removeThemeById(long themeId);
-    SubTheme removeSubThemeById(long subThemeId);
-    List<SubTheme> removeSubThemesByThemeId(long themeId);
+    void removeThemeByThemeId(long themeId);
+    void removeSubThemeById(long subThemeId);
+    void removeSubThemesByThemeId(long themeId);
     void removeAllThemes();
 
     List<Theme> getAllThemes();
@@ -34,10 +34,10 @@ public interface ThemeService {
     List<Card> getCardsBySubthemeId(long subthemeId);
     Card getCardById(long cardId);
     Card editCard(Card card);
-    Card removeCardById(long cardId);
+    void removeCardById(long cardId);
 
     Card addCard(Card newCard);
     SubTheme addCardToSubTheme(long cardId, long subThemeId);
-    SubTheme removeCardsFromSubTheme(long i);
+    void removeCardsFromSubTheme(long i);
     List<Card> getAllCards();
 }
